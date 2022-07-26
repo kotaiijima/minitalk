@@ -6,7 +6,7 @@
 /*   By: kiijima <kiijima@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 12:17:30 by kiijima           #+#    #+#             */
-/*   Updated: 2022/07/26 17:59:29 by kiijima          ###   ########.fr       */
+/*   Updated: 2022/07/26 20:53:42 by kiijima          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	send_msg(int pid, char *msg)
 			if (kill_status == -1)
 				error_msg("kill error");
 			shift_count++;
-			usleep(150);
+			usleep(10000);
 		}
 		i++;
 	}
@@ -49,6 +49,8 @@ int	main(int argc, char **argv)
 
 	if (argc != 3)
 		error_msg("invalid argument\n");
+	if (ft_strlen(argv[1]) > 7)
+		error_msg("too long pid");
 	pid = ft_atoi(argv[1]);
 	send_msg(pid, argv[2]);
 }

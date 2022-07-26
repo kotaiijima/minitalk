@@ -1,25 +1,32 @@
-CC		=	cc
-CFLAGS	=	-Wall -Werror -Wextra
-SERVER	=	server
-CLIENT	=	client
-NAME	=	minitalk
+CC		=		cc
+CFLAGS	=		-Wall -Werror -Wextra
+SERVER	=		server
+CLIENT	=		client
+NAME	=		minitalk
+SRCS_SERVER	=	server.c mini_utils.c
+SRCS_CLIENT	=	client.c mini_utils.c
+OBJS_SERVER	=	$(SRCS_SERVER:.c=.o)
+OBJS_CLIENT	=	$(SRCS_CLIENT:.c=.o)
 
-$(NAME):	$(SERVER) $(CLIENT)
+$(NAME):		$(SERVER) $(CLIENT)
 
-server:		server.c mini_utils.c
-			$(CC) $(CFLAGS) server.c mini_utils.c -o $(SERVER)
+.c.o :
+				$(CC) $(CFLAGS) -c $< -o ${<:.c=.o}
 
-client:		client.c mini_utils.C
-			$(CC) $(CFLAGS) client.c mini_utils.c -o $(CLIENT)
+server:			$(OBJS_SERVER)
+				$(CC) $(CFLAGS) $(OBJS_SERVER) -o $(SERVER)
 
-all:		$(NAME)
+client:			$(OBJS_CLIENT)
+				$(CC) $(CFLAGS) $(OBJS_CLIENT) -o $(CLIENT)
+
+all:			$(NAME)
 
 clean:
-			rm -f server.o client.o mini_utils.o
+				rm -f server.o client.o mini_utils.o
 
-fclean:		clean
-			rm -f $(SERVER) $(CLIENT)
+fclean:			clean
+				rm -f $(SERVER) $(CLIENT)
 
-re:			fclean all
+re:				fclean all
 
-.PHONY:		all clean fclean re
+.PHONY:			all clean fclean re
